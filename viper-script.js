@@ -1,48 +1,27 @@
-function hamburg(){
-    const navbar = document.querySelector(".dropdown")
-    navbar.style.transform = "translateY(0px)"
+const roles = ["Bug Hunter","Cyber Security Researcher"];
+let roleIndex = 0;
+let charIndex = 0;
+const dynamicText = document.getElementById("dynamic-text");
+
+function typeEffect() {
+  if (charIndex < roles[roleIndex].length) {
+    dynamicText.textContent += roles[roleIndex][charIndex];
+    charIndex++;
+    setTimeout(typeEffect, 200);
+  } else {
+    setTimeout(eraseEffect, 1000);
+  }
 }
 
-function cancel(){
-    const navbar = document.querySelector(".dropdown")
-    navbar.style.transform = "translateY(-500px)"
+function eraseEffect() {
+  if (charIndex > 0) {
+    dynamicText.textContent = roles[roleIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(eraseEffect, 100);
+  } else {
+    roleIndex = (roleIndex + 1) % roles.length;
+    setTimeout(typeEffect, 200);
+  }
 }
 
-// Typewriter Effect
-
-const texts = [
-    "DEVELOPER",
-    "DESIGNER",
-    "YOUTUBER"
-]
-
-let speed  =100;
-const textElements = document.querySelector(".typewriter-text");
-
-let textIndex = 0;
-let charcterIndex = 0;
-
-function typeWriter(){
-    if (charcterIndex < texts[textIndex].length){
-        textElements.innerHTML += texts[textIndex].charAt(charcterIndex);
-        charcterIndex++;
-        setTimeout(typeWriter, speed); 
-    }
-    else{
-        setTimeout(eraseText, 1000)
-    }
-}
-
-function eraseText(){
-    if(textElements.innerHTML.length > 0){
-        textElements.innerHTML = textElements.innerHTML.slice(0,-1);
-        setTimeout(eraseText, 50)
-    }
-    else{
-        textIndex = (textIndex + 1) % texts.length;
-        charcterIndex = 0;
-        setTimeout(typeWriter, 500)
-    }
-}
-
-window.onload = typeWriter
+typeEffect();
